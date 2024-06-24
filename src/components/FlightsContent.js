@@ -31,7 +31,7 @@ const FlightsPage = () => {
     return (
         <div className='main-content scroll-list' style={{ overflowY: 'scroll' }}>
             {flightsData ? flightsData.map((flight, index) => (
-                <Row key={index} style={{ width: '100%', fontSize: '2.7rem', borderBottom: '0.1rem solid white', padding: '1rem', color: 'white' }}>
+                <Row key={index} style={{ width: '100%', fontSize: '18px', borderBottom: '0.1rem solid white', padding: '1rem', color: 'white' }}>
                     <Col>
                         <div>
                             <strong>{flight.flight.iata} / {flight.flight.icao}</strong>

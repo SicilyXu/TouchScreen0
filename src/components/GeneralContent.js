@@ -4,7 +4,7 @@ import ContentDetail from '../components/ContentDetail.js';
 import ContentIndex from '../components/ContentIndex.js';
 
 const GeneralContent = () => {
-    const [leftSideBar, setLeftSideBar] = useState(null);
+    const [leftSideBar, setLeftSideBar] = useState(null); // 这里应该是 [leftSideBar, setLeftSideBar]
     const [navSideBar, setNavSideBar] = useState([]);
     const { generalData, globalId, setGlobalId } = useContext(AppContext);
 
@@ -37,38 +37,41 @@ const GeneralContent = () => {
                 setNavSideBar([]);
             }
         }
-
-
-
     }, [generalData, globalId])
 
-
     return (
-
-        <div className="main-content" style={{ display: 'flex' }}>
-            {generalData && globalId && <div className='left-sidebar'>
-                <div style={{ paddingTop: '1rem' }}>
-                    {navSideBar.length > 0 &&
-                        <div className='d-flex flex-column justify-content-center align-items-center' onClick={() => setGlobalId(navSideBar[navSideBar.length - 1].back_id)}>
-                            <img src={`${process.env.PUBLIC_URL}/images/main/back_icon.png`} alt="back-button"
-                                style={{ width: '50%' }} />
-                            <p className='bar-index-content'>BACK</p>
-
-                        </div>
-                    }
+        <div className="main-content" style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+            {/* 左侧边栏，仅当 generalData 和 globalId 存在时显示 */}
+            {generalData && globalId && navSideBar.length > 0 && (
+                <div className='left-sidebar' style={{ width: '10%' }}>
+                    <div style={{ paddingTop: '1rem' }}>
+                        {/* 返回按钮，当 navSideBar 有内容时显示 */}
+                        {navSideBar.length > 0 && (
+                            <div
+                                className='d-flex flex-column justify-content-center align-items-center'
+                                onClick={() => setGlobalId(navSideBar[navSideBar.length - 1].back_id)}
+                            >
+                                <img
+                                    src={`${process.env.PUBLIC_URL}/images/main/back_icon.png`}
+                                    alt="back-button"
+                                    style={{ width: '50%' }}
+                                />
+                                <p className='bar-index-content'>BACK</p>
+                            </div>
+                        )}
+                    </div>
                 </div>
-                <div className='center-content'>
-                    <p className='sidebar-caption'>{leftSideBar}</p>
-                </div>
-            </div>}
-            <div className='right-sidebar'>
-                {globalId.substring(6, 8) !== "00" ?
-                    <ContentDetail globalId={globalId} setGlobalId={setGlobalId} /> :
-                    <ContentIndex globalId={globalId} setGlobalId={setGlobalId} />}
+            )}
+            {/* 右侧内容区，根据 globalId 的值显示不同的组件 */}
+            <div className='right-sidebar' style={{ width: navSideBar.length > 0 ? '90%' : '100%' }}>
+                {globalId.substring(6, 8) !== "00" ? (
+                    <ContentDetail globalId={globalId} setGlobalId={setGlobalId} />
+                ) : (
+                    <ContentIndex globalId={globalId} setGlobalId={setGlobalId} />
+                )}
             </div>
-
         </div>
-    )
+    );
 }
 
 export default GeneralContent;

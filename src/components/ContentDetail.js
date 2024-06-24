@@ -12,36 +12,48 @@ const ContentDetail = ({ globalId, setGlobalId }) => {
 
     useEffect(() => {
         if (globalId && globalId.substring(6, 8) !== "00") {
+            // 查找一级数据
             const temp1 = generalData.find(data => data.global_id === globalId.substring(0, 2) + '000000');
-            if (temp1.attributes_inner === 'sidebar' || !temp1.attributes_is_index) {
+            if (temp1 && !temp1.attributes_is_index) {
                 setContent(temp1.attributes.find(data => data.global_id === globalId));
             } else {
-                const temp2 = temp1.attributes.find(data => data.global_id === globalId.substring(0, 4) + '0000');
-                if (temp2.attributes_inner === 'sidebar' ) {
+                // 查找二级数据
+                const temp2 = temp1?.attributes.find(data => data.global_id === globalId.substring(0, 4) + '0000');
+                if (temp2) {
                     setContent(temp2.attributes.find(data => data.global_id === globalId));
                 } else {
-                    const temp3 = temp2.attributes.find(data => data.global_id === globalId.substring(0, 6) + '00');
-                    if (temp3.attributes_inner === 'sidebar' || !temp3.attributes_is_index) {
+                    // 查找三级数据
+                    const temp3 = temp2?.attributes.find(data => data.global_id === globalId.substring(0, 6) + '00');
+                    if (temp3 && !temp3.attributes_is_index) {
                         setContent(temp3.attributes.find(data => data.global_id === globalId));
                     }
                 }
             }
         }
-    }, [globalId, generalData])
+    }, [globalId, generalData]);
+
+    useEffect(() => {
+        if (showMap) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+
+        // Cleanup function to restore the original style when the component unmounts
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, [showMap]);
 
     const handleMapClick = (name, url) => {
         setMapUrl(url);
-        setMapName(name)
+        setMapName(name);
         setShowMap(true);
     };
 
     const hideMap = () => {
         setShowMap(false);
     };
-
-    const backMap = () => {
-        setGlobalId(globalId.substring(0, 6) + "00");
-    }
 
     const handlePress = (e) => {
         let clientX, clientY;
@@ -67,7 +79,6 @@ const ContentDetail = ({ globalId, setGlobalId }) => {
     };
 
     const handlePressRelease = (e) => {
-        // delete the zoom in process
         e.target.style.transform = 'none';
     };
 
@@ -76,7 +87,7 @@ const ContentDetail = ({ globalId, setGlobalId }) => {
             {content && !content.custom_actions.includes("map-only") && (
                 <div className='d-flex flex-column h-100'>
                     <div className='content-image'>
-                        {content.public_image_urls.length > 1 ?
+                        {content.public_image_urls.length > 1 ? (
                             <Carousel interval={5000} pause={false}>
                                 {content.public_image_urls.map((url, index) => (
                                     <Carousel.Item key={index}>
@@ -88,47 +99,55 @@ const ContentDetail = ({ globalId, setGlobalId }) => {
                                         />
                                     </Carousel.Item>
                                 ))}
-                            </Carousel> :
+                            </Carousel>
+                        ) : (
                             <img
                                 className="d-block w-100 single-image"
                                 src={`${content.public_image_urls[0]}`}
                                 alt={`${content.name}`}
                             />
-                        }
+                        )}
                     </div>
-                    {content.public_brand_url && !(content.custom_actions.includes("no-brand-picture")) ?
+                    {content.public_brand_url && !content.custom_actions.includes("no-brand-picture") ? (
                         <div className='content-title'>
-
                             <span style={{ height: 0 }}>
-                                <img src={content.public_brand_url} alt={content} style={{ width: '12.5rem', height: '9.375rem', transform: "translateY(-7.5rem)", border: "0.3rem solid white", objectFit: 'fill' }} />
+                                <img
+                                    src={content.public_brand_url}
+                                    alt={content.name}
+                                    style={{ width: '12.5rem', height: '9.375rem', transform: "translateY(-7.5rem)", border: "0.3rem solid white", objectFit: 'fill' }}
+                                />
                             </span>
-
                             <span style={{ paddingLeft: "3.125rem" }}>{content.name}</span>
-                        </div> :
+                        </div>
+                    ) : (
                         <div className='content-title' style={{ justifyContent: 'center' }}>
                             {content.name}
                         </div>
-                    }
+                    )}
                     <div className='content-list'>
                         <div className='content-content' style={{ borderRight: '1px solid' }}>
                             <span>{content.left_description + "\n"}</span>
                         </div>
                         <div className='content-content'>
-                            <span> {content.right_description + "\n"}</span>
+                            <span>{content.right_description + "\n"}</span>
                             {content.map_urls && content.map_urls.length > 0 && content.map_urls.map((map, index) => (
-                                <button className='btn-map' onClick={() => handleMapClick(map.name ? map.name : content.name + " map", map.public_url)} key={index}> {map.name ? map.name : "See Map"}</button>
+                                <button className='btn-map' onClick={() => handleMapClick(map.name ? map.name : content.name + " map", map.public_url)} key={index}>
+                                    {map.name ? map.name : "See Map"}
+                                </button>
                             ))}
-                            {Object.keys(content.QR).length !== 0 && <div>
-                                <br />
-                                <p>{content.QR.name}</p>
-                                <img
-                                    className="d-block w-50 "
-                                    src={content.QR.public_url}
-                                    alt={content.QR.name}
-                                    style={{ objectFit: 'cover' }}
-                                />
-                                <br />
-                            </div>}
+                            {Object.keys(content.QR).length !== 0 && (
+                                <div>
+                                    <br />
+                                    <p>{content.QR.name}</p>
+                                    <img
+                                        className="d-block w-50"
+                                        src={content.QR.public_url}
+                                        alt={content.QR.name}
+                                        style={{ objectFit: 'cover' }}
+                                    />
+                                    <br />
+                                </div>
+                            )}
                         </div>
                     </div>
                     {showMap && (
@@ -136,9 +155,7 @@ const ContentDetail = ({ globalId, setGlobalId }) => {
                             style={{
                                 position: 'fixed',
                                 top: 0,
-                                left: 0,
-                                right: 0,
-                                bottom: 0,
+                                left: 'calc(50% - 31.25rem)', // 将地图显示在页面中央
                                 width: '62.5rem',
                                 height: '100vh',
                                 backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -178,12 +195,10 @@ const ContentDetail = ({ globalId, setGlobalId }) => {
                                     <span>Click Outside to Exit</span>
                                 </div>
                             </div>
-
                         </div>
                     )}
                     <div className='content-wrapper'>&nbsp;</div>
                 </div>
-
             )}
             {content && content.custom_actions.includes("map-only") && (
                 <div className='d-flex flex-column h-100'>
@@ -191,15 +206,12 @@ const ContentDetail = ({ globalId, setGlobalId }) => {
                         style={{
                             position: 'fixed',
                             top: 0,
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            width: '62.5rem',
+                            width: '65.5rem',
                             height: '100vh',
                             backgroundColor: 'rgba(0, 0, 0, 0.5)',
                             zIndex: 100
                         }}
-                        onClick={() => backMap()}
+                        onClick={() => setGlobalId(globalId.substring(0, 6) + "00")}
                     >
                         <div>
                             <div className='map-header'>
@@ -209,14 +221,14 @@ const ContentDetail = ({ globalId, setGlobalId }) => {
                             </div>
                             <div className='map-content' style={{
                                 overflow: 'hidden',
-                                width: '62.5rem',
+                                width: '65.5rem',
                                 height: '48.94rem',
                             }}>
                                 <img
                                     src={content.map_urls[0].public_url}
                                     alt="Map"
                                     style={{
-                                        width: '62.5rem',
+                                        width: '65.5rem',
                                         height: '48.94rem',
                                         maxHeight: '48.94rem',
                                         margin: 'auto',
@@ -233,11 +245,9 @@ const ContentDetail = ({ globalId, setGlobalId }) => {
                                 <span>Click Outside to Exit</span>
                             </div>
                         </div>
-
                     </div>
                     <div className='content-wrapper'>&nbsp;</div>
                 </div>
-
             )}
         </>
     );

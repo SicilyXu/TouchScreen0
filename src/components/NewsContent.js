@@ -32,8 +32,8 @@ const NewsContent = () => {
                     <div key={index} style={{ display: "flex", width: '100%', height: '15rem', borderBottom: '0.1rem solid white', padding: '1rem', color: 'white' }}
                         onClick={() => handleNewsClick(newsItem)}>
                         <div style={{ width: '70%', padding: '0 4rem 0 0' }}>
-                            <p style={{ margin: '0 0 2rem 0', fontSize: '2.7rem' }}>{newsItem.header}</p>
-                            <p style={{ margin: '1', fontSize: '1.7rem' }}>{newsItem.text}</p>
+                            <p style={{ margin: '0 0 2rem 0', fontSize: '18px' }}>{newsItem.header}</p> {/* Use px for fixed size */}
+                            <p style={{ margin: '1', fontSize: '1px' }}>{newsItem.text}</p> {/* Use px for fixed size */}
                         </div>
                         <div style={{ width: '30%' }}>
                             {isSlowConnection ? (

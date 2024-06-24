@@ -1,3 +1,8 @@
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -38,13 +43,13 @@
 }
 
 :root {
-  font-size: 1.5vw;
+  font-size: 10px;
 }
 
 @media screen and (min-aspect-ratio: 9/16) {
   :root {
     max-width: 56.25vh;
-    font-size: 0.9vh;
+    font-size: 10px;;
   }
 }
 
@@ -100,7 +105,7 @@
 .main-content {
   flex: 1;
   background-color: var(--clr-standard);
-  overflow: hidden;
+  
 
   .video-player video {
     width: 100%;
@@ -137,6 +142,7 @@
   flex-direction: column;
   justify-content: space-between;
   z-index: 100;
+  transition: width 0.3s ease;
 
   .bar-index-content {
     color: var(--clr-white);
@@ -155,9 +161,10 @@
   }
 
   .sidebar-caption {
+    position: fixed;
     text-transform: uppercase;
     color: var(--clr-white);
-    font-size: 3rem;
+    font-size: 5rem;
     letter-spacing: 0.3rem;
     text-align: start;
     transform: rotate(-90deg);
@@ -172,6 +179,8 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  transition: width 0.3s ease;
+  overflow: hidden; /* 确保右侧内容不超出边界 */
 
   .upper-caption {
     background-color: var(--clr-dark);
@@ -289,7 +298,7 @@
   }
 
   .content-title {
-    font-size: 2.5rem;
+    font-size: 10px;
     text-transform: uppercase;
     align-items: center;
     justify-content: left;
@@ -346,6 +355,8 @@
   }
 
 }
+
+
 
 footer {
   height: 1080px;

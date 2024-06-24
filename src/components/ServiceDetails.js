@@ -26,9 +26,9 @@ const HomeContent = () => {
                         <img
                             src={`${process.env.PUBLIC_URL}/images/main/${service.icon}`}
                             alt={service.name.toLowerCase()}
-                            style={{ width: '5rem', height: '5rem' }}
+                            style={{ width: '50px', height: '5rem' }}
                         />
-                       <span style={{ fontSize: '2rem', marginTop: '2rem', color: 'white' }}>{service.name}</span> {/* Increase font size and add margin for spacing */}
+                       <span style={{ fontSize: '18px', marginTop: '10px', color: 'white' }}>{service.name}</span> {/* Increase font size and add margin for spacing */}
                     </span>
                 ))}
             </div>

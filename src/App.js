@@ -1,10 +1,11 @@
+// src/App.js
 import React, { useEffect } from 'react';
+import './index.css';
 import './App.css';
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import MasterPage from './pages/MasterPage.js';
 import MainPage from './pages/MainPage.js';
 import { AppProvider } from './context/AppContext';
-
 
 function App() {
   useEffect(() => {
@@ -22,12 +23,10 @@ function App() {
   return (
     <AppProvider>
       <Router>
-
         <Routes>
           <Route path="/" element={<MasterPage />} />
           <Route path="/hotel/" element={<MainPage />} />
         </Routes>
-
       </Router>
     </AppProvider>
   );

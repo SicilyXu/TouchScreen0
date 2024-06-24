@@ -119,9 +119,7 @@ const ContentIndex = ({ globalId, setGlobalId }) => {
                     style={{
                         position: 'fixed',
                         top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
+                        left: 'calc(50% - 31.25rem)', // 将地图显示在页面中央,
                         width: '62.5rem',
                         height: '100vh',
                         backgroundColor: 'rgba(0, 0, 0, 0.5)',

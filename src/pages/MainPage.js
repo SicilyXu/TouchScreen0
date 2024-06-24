@@ -33,10 +33,10 @@ const MainPage = () => {
             <div style={{ width: '480px', height: '1080px', display: 'flex', flexDirection: 'column' }}>
                 <Header />
             </div>
-            <div style={{ width: '106px', height: '1080px', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ width: '136px', height: '1080px', display: 'flex', flexDirection: 'column' }}>
                  <HomeContent />
             </div>
-            <div style={{ width: '794px', height: '1080px', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ width: '764px', height: '1080px', display: 'flex', flexDirection: 'column' }}>
                 {selectedService ? renderContent(selectedService) : <ServiceDetail />}
             </div>
             <div style={{ width: '540px', height: '1080px', display: 'flex', flexDirection: 'column' }}>
