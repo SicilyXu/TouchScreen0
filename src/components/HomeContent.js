@@ -2,8 +2,15 @@ import React, { useContext } from 'react';
 import AppContext from '../context/AppContext.js';
 import ServiceDetails from './ServiceDetails';
 
-const HomeContent = () => {
+const HomeContent = ({ onIconClick }) => {
     const { selectedService, services, handleServiceClick } = useContext(AppContext);
+
+    const handleClick = (service) => {
+        handleServiceClick(service);
+        if (onIconClick) {
+            onIconClick();
+        }
+    };
 
     return (
         <div className="main-content" style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%' }}>
@@ -22,7 +29,7 @@ const HomeContent = () => {
                                 borderBottom: index !== services.length - 1 ? '1px solid white' : 'none',
                                 boxSizing: 'border-box'  // Ensure padding and border are included in the element's total height and width
                             }}
-                            onClick={() => handleServiceClick(service)}
+                            onClick={() => handleClick(service)}
                         >
                             <img
                                 src={`${process.env.PUBLIC_URL}/images/main/${service.icon}`}

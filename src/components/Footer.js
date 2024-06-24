@@ -1,19 +1,16 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import AppContext from '../context/AppContext.js';
 
-
-
-
-const Footer = () => {
-    const [ setImages] = useState([]);
-    const { hotelData, hotelId,} = useContext(AppContext);
+const Footer = ({ showVideo, videoUrl }) => {
+    const [images, setImages] = useState([]);
+    const { hotelData, hotelId } = useContext(AppContext);
     const [currentVideoIndex, setCurrentVideoIndex] = useState(hotelData ? Math.floor(Math.random() * hotelData["landing"]["public_hotel_videos"].length) : 0);
 
     const videoRef = useRef(null);
 
     useEffect(() => {
         if (hotelData) {
-            setCurrentVideoIndex(Math.floor(Math.random() * hotelData["landing"]["public_hotel_videos"].length))
+            setCurrentVideoIndex(Math.floor(Math.random() * hotelData["landing"]["public_hotel_videos"].length));
         }
     }, [hotelData]);
 
@@ -23,7 +20,7 @@ const Footer = () => {
         let isCancelled = false;
 
         if (videoElement) {
-            videoElement.src = `${hotelData["landing"]["public_hotel_videos"][currentVideoIndex]}`;
+            videoElement.src = videoUrl ? videoUrl : `${hotelData["landing"]["public_hotel_videos"][currentVideoIndex]}`;
 
             videoElement.load();
             const playPromise = videoElement.play();
@@ -54,9 +51,7 @@ const Footer = () => {
             videoElement?.removeEventListener('ended', handleVideoEnd);
             videoElement?.pause();
         };
-    }, [currentVideoIndex, hotelData]);
-
-
+    }, [currentVideoIndex, hotelData, videoUrl]);
 
     useEffect(() => {
         if (hotelId !== "") {
@@ -70,18 +65,17 @@ const Footer = () => {
                 })
                 .then(data => {
                     setImages(data);
-                })
+                });
         }
 
     }, [hotelId]);
-
 
     return (
         <footer>
             <>
                 {/* Video Player */}
                 {hotelData &&
-                    <div className="video-player" style={{ width: '560px', height: '400px' }}>
+                    <div className="video-player" style={{ width: showVideo ? '100%' : '560px', height: showVideo ? '100%' : '400px' }}>
                         <video
                             ref={videoRef}
                             autoPlay
@@ -90,7 +84,7 @@ const Footer = () => {
                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                         >
                             <source
-                                src={`${hotelData["landing"]["public_hotel_videos"][currentVideoIndex]}`}
+                                src={videoUrl ? videoUrl : `${hotelData["landing"]["public_hotel_videos"][currentVideoIndex]}`}
                                 type="video/mp4"
                             />
                             Your browser does not support the video tag.

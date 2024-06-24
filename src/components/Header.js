@@ -3,8 +3,7 @@ import AppContext from '../context/AppContext.js';
 import { Carousel } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
-
-const Header = () => {
+const Header = ({ onClick }) => {
     const [images, setImages] = useState([]);
     const [dateTime, setDateTime] = useState('');
     const [weather, setWeather] = useState([]);
@@ -23,7 +22,6 @@ const Header = () => {
     { name: 'EVENTS', icon: 'events_icon.png', globalId: '05000000' },
     { name: 'EATING OUT', icon: 'eating_out_icon.png', globalId: '06000000' },
     { name: 'OUR HOTEL', icon: 'accomodation_icon.png', globalId: '07000000' }]
-
 
     const handleAdvClick = (link_id) => {
         if (link_id) {
@@ -88,7 +86,6 @@ const Header = () => {
         // Clean up the interval on unmount
         return () => clearInterval(intervalId);
     }, []);
-
 
     // flipping displays
     useEffect(() => {
@@ -195,7 +192,7 @@ const Header = () => {
 
 
     return (
-        <header style={{ height: '1080px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <header style={{ height: '1080px', display: 'flex', flexDirection: 'column', alignItems: 'center' }} onClick={onClick}>
             {hotelData && <div style={{ backgroundImage: `url(${hotelData["landing"]["public_hotel_logo"]})`, backgroundSize: '100% 100%', width: '480px', height: '360px' }}
                 onClick={() => {
                     if (!selectedService)
@@ -271,5 +268,3 @@ const Header = () => {
 };
 
 export default Header;
-
-
