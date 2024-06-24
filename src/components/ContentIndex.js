@@ -118,11 +118,10 @@ const ContentIndex = ({ globalId, setGlobalId }) => {
                 <div
                     style={{
                         position: 'fixed',
-                        top: 0,
-                        left: 'calc(50% - 31.25rem)', // 将地图显示在页面中央,
-                        width: '62.5rem',
+                        top: 0,            
+                        width: '68.8rem',
                         height: '100vh',
-                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        backgroundColor: 'rgba(0, 0, 0, 0.7)',
                         zIndex: 100
                     }}
                     onClick={() => hideMap()}
@@ -135,14 +134,14 @@ const ContentIndex = ({ globalId, setGlobalId }) => {
                         </div>
                         <div className='map-content' style={{
                             overflow: 'hidden',
-                            width: '62.5rem',
+                            width: '68.8rem',
                             height: '48.94rem',
                         }}>
                             <img
                                 src={displayMap}
                                 alt="Map"
                                 style={{
-                                    width: '62.5rem',
+                                    width: '68.8rem',
                                     height: '48.94rem',
                                     maxHeight: '48.94rem',
                                     margin: 'auto',

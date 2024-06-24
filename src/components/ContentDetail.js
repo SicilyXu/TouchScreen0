@@ -155,8 +155,8 @@ const ContentDetail = ({ globalId, setGlobalId }) => {
                             style={{
                                 position: 'fixed',
                                 top: 0,
-                                left: 'calc(50% - 31.25rem)', // 将地图显示在页面中央
-                                width: '62.5rem',
+                               
+                                width: '65.5rem',
                                 height: '100vh',
                                 backgroundColor: 'rgba(0, 0, 0, 0.5)',
                                 zIndex: 100
@@ -171,14 +171,14 @@ const ContentDetail = ({ globalId, setGlobalId }) => {
                                 </div>
                                 <div className='map-content' style={{
                                     overflow: 'hidden',
-                                    width: '62.5rem',
+                                    width: '65.5rem',
                                     height: '48.94rem',
                                 }}>
                                     <img
                                         src={mapUrl}
                                         alt="Map"
                                         style={{
-                                            width: '62.5rem',
+                                            width: '65.5rem',
                                             height: '48.94rem',
                                             maxHeight: '48.94rem',
                                             margin: 'auto',
@@ -206,7 +206,7 @@ const ContentDetail = ({ globalId, setGlobalId }) => {
                         style={{
                             position: 'fixed',
                             top: 0,
-                            width: '65.5rem',
+                            width: '68.8rem',
                             height: '100vh',
                             backgroundColor: 'rgba(0, 0, 0, 0.5)',
                             zIndex: 100
@@ -221,14 +221,14 @@ const ContentDetail = ({ globalId, setGlobalId }) => {
                             </div>
                             <div className='map-content' style={{
                                 overflow: 'hidden',
-                                width: '65.5rem',
+                                width: '68.8rem',
                                 height: '48.94rem',
                             }}>
                                 <img
                                     src={content.map_urls[0].public_url}
                                     alt="Map"
                                     style={{
-                                        width: '65.5rem',
+                                        width: '68.8rem',
                                         height: '48.94rem',
                                         maxHeight: '48.94rem',
                                         margin: 'auto',

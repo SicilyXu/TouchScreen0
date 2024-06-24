@@ -215,7 +215,7 @@ const Header = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 overflow: 'hidden',
-                fontSize: '2.5rem',
+                fontSize: '20px',
                 color: 'white',
                 border: 0,
                 textAlign: 'center',  // 确保文本在容器中水平居中
@@ -224,7 +224,7 @@ const Header = () => {
                 &nbsp;&nbsp;NEWS: {currentNewsDisplay}
             </div>
             <div className="flex-column w-100" style={{ width: '480px', color: 'white' }}>
-                <div className="d-flex flex-column align-items-center justify-content-center header-nav-icon" style={{ height: '80px', width: '480px', fontSize: '2.5rem' }}
+                <div className="d-flex flex-column align-items-center justify-content-center header-nav-icon" style={{ height: '80px', width: '480px', fontSize: '20px' }}
                     onClick={() => { setSelectedService("Flights") }}>
                     {flightsData && flightsData.length !== 0 &&
                         <span key={currentFlightDisplay} className="flip-animation">
@@ -232,7 +232,7 @@ const Header = () => {
                         </span>}
                     {flightsData && flightsData.length === 0 && <span>No Flight Today</span>}
                 </div>
-                <div className="d-flex flex-column align-items-center justify-content-center header-nav-icon-selected" style={{ height: '80px', width: '480px', fontSize: '2.5rem' }}>
+                <div className="d-flex flex-column align-items-center justify-content-center header-nav-icon-selected" style={{ height: '80px', width: '480px', fontSize: '20px' }}>
                     {currentTimeDisplay === 'dateTime' && <span className="flip-animation">{dateTime}</span>}
                     {typeof currentTimeDisplay === 'number' && <span className="flip-animation" style={{ whiteSpace: "nowrap" }}>{weather[currentTimeDisplay]}</span>}
                 </div>
